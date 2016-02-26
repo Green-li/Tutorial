@@ -8,12 +8,13 @@ class tutorModel extends model
     {
         if(!$user) $user = $this->session->user->account;
         $teacher = $this->dao
-                    ->select('t2.account, t2.realname, t1.team, t1.team')
+                    ->select('t2.account, t2.realname, t1.team')
                     ->from(TABLE_RELATIONS)->alias(t1)
                     ->leftJoin(TABLE_USER)->alias(t2)
                     ->on('t1.tea_ID=t2.account')
                     ->where('t1.stu_ID')->eq($user)
                     ->andWhere('t1.deleted')->eq(0)
+                    ->andWhere('t2.deleted')->eq(0)
                     ->fetchAll();
         return array_filter($teacher);
     }
